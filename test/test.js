@@ -6,7 +6,7 @@ describe('jsCalendar', function () {
 
     describe('basic functionality', function () {
         it('should do basic functionality', function () {
-			var january = jsCalendar(2019, 0);
+			var january = jsCalendar.generator(2019, 0);
             assert.equal(january.cells.length, 56);
             assert.equal(january.month, 0);
 			assert.equal(january.year, 2019);
@@ -24,7 +24,7 @@ describe('jsCalendar', function () {
 			
 			for (var y = 1800; y < 2300; y++){	// check dates between 1800 and 2300
 				for (var m = 0; m < 12; m++){
-					var monthInYear = jsCalendar(y, m);
+					var monthInYear = jsCalendar.generator(y, m);
 					var monthLength = monthLengths[m];
 					if (!monthLength) monthLength = isLeapYear(y) ? 29 : 28;
 					assert.equal(monthInYear.daysInMonth, monthLength);
@@ -32,7 +32,7 @@ describe('jsCalendar', function () {
 					var days = monthInYear.cells.filter(function(cell){
 						return cell.type == 'monthDay';
 					});
-					var lastDay = days.pop().day;
+					var lastDay = days.pop().desc;
 					assert.equal(monthInYear.daysInMonth, lastDay);
 				}
 			}

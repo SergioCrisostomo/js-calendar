@@ -7,6 +7,11 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 ## install
 
     npm install js-calendar
+	
+## modules
+
+	- generator - the function to generate calendar days for current month
+	- addLabels - the iterator to add basic class property to each day object and labels for column head
 
 ## syntax
 
@@ -16,7 +21,7 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 
 1. year - (number) the year
 2. month - (number) the month, zero based (ie. january is month number `0`).
-3. iteratorFn - a function to be used on each day, receives a object with:
+3. iteratorFns - a function (or array of functions) to be used while iterating each day, receives a object with:
 	- (_desc_) the generated day or week number. Will be set `false` if its a label cell.
 	- (_week_) the number of the week in the year
 	- (_type_) the type of the iterated object. Can be `weekLabel`, `dayLabel`, `prevMonth`, `nextMonth` or `monthDay`.
@@ -38,9 +43,24 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 
 #### examples:
 
+Get just the days in a month:
+
+	var jsCalendar = require('js-calendar').generator;
+	var januaryDays = jsCalendar(2016, 1, false, true).daysInMonth;	// 29
+	var days = jsCalendar(2016, 1).cells;
+	// 	[
+	//     	{"desc":1,"week":6,"type":"monthDay","date":"2016-01-31T23:00:00.000Z","index":5},
+	//     	{"desc":2,"week":6,"type":"monthDay","date":"2016-02-01T23:00:00.000Z","index":6},
+	//     	etc...
+	
+Get days and labels in a month:
 
 	var jsCalendar = require('js-calendar');
-	var januaryDays = jsCalendar(2016, 1).days;
+	var days = jsCalendar.genegator(2016, 1, jsCalendar.addLabels).cells;
+	// 	[
+	//		{"desc":"monday","week":5,"type":"weekLabel","date":false,"index":1,"class":"week-number"},
+	//		{"desc":"tuesday","week":5,"type":"dayLabel","date":false,"index":2,"class":"column-name"},
+	//		etc...
 
 ## testing
 
