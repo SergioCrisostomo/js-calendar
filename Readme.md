@@ -6,7 +6,7 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 
 ## install
 
-    npm install js-calendar --save
+    npm install js-calendar
 
 ## syntax:
 
@@ -36,7 +36,7 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 
 
 	jsCalendar = require('js-calendar');
-	var january = jsCalendar(2016, 7);
+	var january = jsCalendar(2016, 1);
 
 ## testing
 
