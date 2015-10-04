@@ -19,7 +19,7 @@ function getWeekNumber(day) {
     };
 }
 
-function getMonthCalender(year, month, iteratorFn, weekStart){
+function getMonthCalender(year, month, iteratorFn, onlyDays, weekStart){
 	if (typeof weekStart == 'undefined') weekStart = 1;
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
@@ -48,15 +48,18 @@ function getMonthCalender(year, month, iteratorFn, weekStart){
 				else if (otherMonth && currentDay > maxDays) return 'nextMonth';
 				else return 'monthDay';
 			})();
+			var isDay = dayBefore == currentDay;
 			var dayData = {
-				day: dayBefore == currentDay ? false : day,
+				desc: isDay ? weekNr : day,
 				week: weekNr,
 				type: type,
-				date: dayBefore == currentDay ? false : new Date(year, currentMonth, day)
+				date: dayBefore == currentDay ? false : new Date(year, currentMonth, day),
+				index: i * 3 + j + 1
 			};
 			if (iteratorFn) dayData = iteratorFn(dayData);
-			cells.push(dayData);					// add data to export
-			if (j == 0 && i > 0) weekNr++;			// welcome to next week
+			if (onlyDays && isDay) cells.push(dayData);	// add data to export
+			else if (!onlyDays) cells.push(dayData);
+			if (j == 0 && i > 0) weekNr++;				// welcome to next week
 		}
 	}
 	return {
