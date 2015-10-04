@@ -41,10 +41,18 @@ function getMonthCalender(year, month, iteratorFn, weekStart){
 					day = day > maxDays ? day - maxDays : lastMonthMaxDays + day;
 					currentMonth = day > maxDays ? month + 1 : month - 1;
 			}
+			var type = (function(){
+				if (j == 0) return 'weekLabel';
+				else if (i == 0) return 'dayLabel';
+				else if (otherMonth && currentDay < 1) return 'prevMonth';
+				else if (otherMonth && currentDay > maxDays) return 'nextMonth';
+				else return 'monthDay';
+			})();
 			var dayData = {
-				day: day,
+				day: dayBefore == currentDay ? false : day,
 				week: weekNr,
-				date: new Date(year, currentMonth, day)
+				type: type,
+				date: dayBefore == currentDay ? false : new Date(year, currentMonth, day)
 			};
 			if (iteratorFn) dayData = iteratorFn(dayData);
 			cells.push(dayData);					// add data to export
@@ -54,7 +62,8 @@ function getMonthCalender(year, month, iteratorFn, weekStart){
 	return {
 		month: month,
 		year: year,
-		days: cells
+		cells: cells,
+		daysInMonth: maxDays
 	};
 }
 
