@@ -19,7 +19,7 @@ function getWeekNumber(day) {
     };
 }
 
-function getMonthCalender(year, month, iteratorFn, onlyDays, weekStart){
+function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 	if (typeof weekStart == 'undefined') weekStart = 1;
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
@@ -56,7 +56,12 @@ function getMonthCalender(year, month, iteratorFn, onlyDays, weekStart){
 				date: isDay ? new Date(year, currentMonth, day) : false,
 				index: i * 3 + j + 1
 			};
-			if (iteratorFn) dayData = iteratorFn(dayData);
+			if (iteratorFns){
+				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData);
+				else iteratorFns.forEach(function(fn){
+					dayData = fn(dayData);
+				});
+			}
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
 			if (j == 0 && i > 0) weekNr++;				// welcome to next week
