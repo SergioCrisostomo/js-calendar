@@ -37,20 +37,17 @@ describe('jsCalendar', function () {
 				}
 			}
         });
-
+        it('should return correct week numbers', function () {
+			for (var y = 2015; y < 2300; y++){	// check dates between 1800 and 2300
+				var monthInYear = jsCalendar.generator(y, 0, false, true);
+				var weekNr = monthInYear.cells[0].week;
+				var dayInWeek = new Date(y, 0).getDay() || 7;
+				if (dayInWeek > 4) assert.equal(weekNr > 50, true);
+				else assert.equal(weekNr, 1);
+				
+				var afterThreeWeeks = monthInYear.cells[28].week;
+				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 4);
+			}
+		});
     });
 });
-/*
-	31 days
-2	February	28 days, 29 in leap years
-3	March	31 days
-4	April	30 days
-5	May	31 days
-6	June	30 days
-7	July	31 days
-8	August	31 days
-9	September	30 days
-10	October	31 days
-11	November	30 days
-12	December	31 days
-*/

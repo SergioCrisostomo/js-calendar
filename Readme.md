@@ -71,7 +71,7 @@ js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your comma
 
 ## todo:
 
-	- add more tests
+	- add even more tests
 	- add usefull iterator function for standard uses
 	- add more examples like jade compiler or some other use case
 	

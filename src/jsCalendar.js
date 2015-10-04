@@ -13,7 +13,7 @@ function getWeekNumber(day) {
     var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
     return {
         y: day.getFullYear(),
-        m: day.getMonth() + 1,
+        m: day.getMonth(),
         d: day.getDate(),
         w: weekNo
     };
@@ -24,7 +24,7 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
-	var currentDay = weekStart - dayOfWeek; // starting position of first day in the week
+	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
 	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
@@ -64,7 +64,7 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 			}
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
-			if (j == 0 && i > 0) weekNr++;				// welcome to next week
+			if (j == 7 && i > 1) weekNr++;				// welcome to next week
 		}
 	}
 	return {
