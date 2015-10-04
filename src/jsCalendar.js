@@ -48,17 +48,17 @@ function getMonthCalender(year, month, iteratorFn, onlyDays, weekStart){
 				else if (otherMonth && currentDay > maxDays) return 'nextMonth';
 				else return 'monthDay';
 			})();
-			var isDay = dayBefore == currentDay;
+			var isDay = dayBefore != currentDay;
 			var dayData = {
-				desc: isDay ? weekNr : day,
+				desc: isDay ? day : weekNr,
 				week: weekNr,
 				type: type,
-				date: dayBefore == currentDay ? false : new Date(year, currentMonth, day),
+				date: isDay ? new Date(year, currentMonth, day) : false,
 				index: i * 3 + j + 1
 			};
 			if (iteratorFn) dayData = iteratorFn(dayData);
-			if (onlyDays && isDay) cells.push(dayData);	// add data to export
-			else if (!onlyDays) cells.push(dayData);
+			if (onlyDays && isDay) cells.push(dayData);	// add only days
+			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
 			if (j == 0 && i > 0) weekNr++;				// welcome to next week
 		}
 	}
