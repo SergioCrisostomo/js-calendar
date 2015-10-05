@@ -44,8 +44,9 @@ function mergeOptions(newOptions){
 
 function addLabels(dayObject, lang){
 	if (!lang) lang = 'en';
-
-	dayObject.class = options.classes[dayObject.type];
+	var cssClass = [options.classes[dayObject.type]];
+	if (dayObject.class) dayObject.class = (typeof dayObject.class == 'string' ? [dayObject.class] : dayObject.class).concat(cssClass);
+	else dayObject.class = cssClass;
 	if (dayObject.index < 8) dayObject.desc = options.columnNames[lang][dayObject.index];
 	else if ((dayObject.index - 1) % 8 == 0) dayObject.desc = dayObject.week;
 	return dayObject;

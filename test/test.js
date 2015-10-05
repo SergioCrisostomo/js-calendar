@@ -49,5 +49,28 @@ describe('jsCalendar', function () {
 				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 4);
 			}
 		});
+		describe('should add classes correctly', function () {
+			it('when custom fn is last', function () {
+				var monthInYear = jsCalendar.generator(2016, 0, [jsCalendar.addLabels, function(dayData){
+						dayData.class.push('test-class');
+						return dayData;
+				}], true);
+				assert.equal(monthInYear.cells[0].class.indexOf('test-class') != -1, true);
+			});
+			it('when custom function is first passing a string', function () {
+			var monthInYear = jsCalendar.generator(2016, 1, [function(dayData){
+					dayData.class = 'test-class';
+						return dayData;
+				}, jsCalendar.addLabels], true);
+				assert.equal(monthInYear.cells[0].class.indexOf('test-class') != -1, true);
+			});
+			it('when custom function is first passing a array', function () {
+			var monthInYear = jsCalendar.generator(2016, 2, [function(dayData){
+					dayData.class = ['test-class'];
+						return dayData;
+				}, jsCalendar.addLabels], true);
+				assert.equal(monthInYear.cells[0].class.indexOf('test-class') != -1, true);
+			});
+		});
     });
 });

@@ -27,6 +27,9 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 	- (_type_) the type of the iterated object. Can be `weekLabel`, `dayLabel`, `prevMonth`, `nextMonth` or `monthDay`.
 	- (_date_) a Date object for that day. Will be set `false` if its a label cell.
 	- (_index_) index position in the 8 x 7 position in the return of the callendar.
+	
+Note:
+The iterator function(s) must `return` the value/object.
 
 4. onlyDays - (boolean) generate only days and no labels or week numebrs. When not specified it will default to `false`;
 5. weekStart - (number) the starting day of the week. Can be `0` for sunday or `1` for monday. When not specified it will default to `1`;
@@ -56,12 +59,14 @@ Get just the days in a month:
 Get days and labels in a month:
 
 	var jsCalendar = require('js-calendar');
-	var days = jsCalendar.genegator(2016, 1, jsCalendar.addLabels).cells;
+	var days = jsCalendar.generator(2016, 1, jsCalendar.addLabels).cells;
 	// 	[
-	//		{"desc":"monday","week":5,"type":"weekLabel","date":false,"index":1,"class":"week-number"},
-	//		{"desc":"tuesday","week":5,"type":"dayLabel","date":false,"index":2,"class":"column-name"},
+	//		{"desc":"monday","week":5,"type":"weekLabel","date":false,"index":1,"class":["week-number"]},
+	//		{"desc":"tuesday","week":5,"type":"dayLabel","date":false,"index":2,"class":["column-name"]},
 	//		etc...
 
+Compile HTML with jade
+	
 ## testing
 
 js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your command line:
