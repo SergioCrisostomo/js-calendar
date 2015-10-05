@@ -46,7 +46,7 @@ describe('jsCalendar', function () {
 				else assert.equal(weekNr, 1);
 				
 				var afterThreeWeeks = monthInYear.cells[28].week;
-				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 4);
+				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 5);
 			}
 		});
 		describe('should add classes correctly', function () {
@@ -71,6 +71,32 @@ describe('jsCalendar', function () {
 				}, jsCalendar.addLabels], true);
 				assert.equal(monthInYear.cells[0].class.indexOf('test-class') != -1, true);
 			});
+		});
+		describe('should generate correct index', function () {
+			it('should not be a monthDay in index < 8', function () {
+				var monthInYear = jsCalendar.generator(2016, 0, [jsCalendar.addLabels]);
+				for (var i = 0; i < 8; i++){
+					assert.equal(monthInYear.cells[i].type != 'monthDay', true);
+					assert.equal(monthInYear.cells[i].index, i);
+				}
+			});
+			
+			it('first index is 0', function () {
+				var monthInYear = jsCalendar.generator(2016, 1, [jsCalendar.addLabels]);
+				assert.equal(monthInYear.cells[0].index == 0, true);
+			});
+			
+			it('last index is 55 for full calendar', function () {
+				var monthInYear = jsCalendar.generator(2016, 2, [jsCalendar.addLabels]);
+				assert.equal(monthInYear.cells.pop().index == 55, true);
+			});
+
+			it('last index is same as month length for only days calendar', function () {
+				var monthInYear = jsCalendar.generator(2016, 2, [jsCalendar.addLabels], true);
+				assert.equal(monthInYear.cells.pop().index, 41);
+				assert.equal(monthInYear.cells.length, 41);
+			});
+
 		});
     });
 });

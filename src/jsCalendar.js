@@ -48,13 +48,13 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 				else if (otherMonth && currentDay > maxDays) return 'nextMonth';
 				else return 'monthDay';
 			})();
-			var isDay = dayBefore != currentDay;
+			var isDay = dayBefore != currentDay && i > 0;
 			var dayData = {
 				desc: isDay ? day : weekNr,
 				week: weekNr,
 				type: type,
 				date: isDay ? new Date(year, currentMonth, day) : false,
-				index: i * 3 + j + 1
+				index: onlyDays ? cells.length : i * 8 + j // when onlyDays == true the index is just for days, not the full 55 max
 			};
 			if (iteratorFns){
 				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData);
@@ -64,7 +64,7 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 			}
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
-			if (j == 7 && i > 1) weekNr++;				// welcome to next week
+			if (j == 7 && i > 0) weekNr++;				// welcome to next week
 		}
 	}
 	return {
@@ -76,20 +76,3 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 }
 
 module.exports = getMonthCalender;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
