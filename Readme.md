@@ -8,14 +8,14 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 
     npm install js-calendar
 	
-## modules
+## methods
 
-	- generator - the function to generate calendar days for current month
-	- addLabels - the iterator to add basic class property to each day object and labels for column head
+	- generator - the main Core feature, a function to generate calendar days for the requested month
+	- addLabels - the default iterator that adds basic CSS classes to each day object and labels for column head
 
 ## syntax
 
-	var january = jsCalendar(year, month, iteratorFn, weekStart);
+	var january = jsCalendar.generator(year, month, iteratorFn, weekStart);
 
 #### arguments:
 
@@ -77,7 +77,7 @@ js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your comma
 ## todo:
 
 	- add even more tests
-	- add usefull iterator function for standard uses
+	- add more usefull iterator function for standard uses
 	- add more examples like jade compiler or some other use case
 	
 
