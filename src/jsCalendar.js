@@ -39,7 +39,7 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 			if (otherMonth){
 					// calculate day in sibling month
 					day = day > maxDays ? day - maxDays : lastMonthMaxDays + day;
-					currentMonth = day > maxDays ? month + 1 : month - 1;
+					currentMonth = currentDay > maxDays ? month + 1 : month - 1;
 			}
 			var type = (function(){
 				if (j == 0) return 'weekLabel';
