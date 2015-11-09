@@ -40,9 +40,9 @@ function getMonthCalender(year, month, iteratorFns){
 		daysInMonth: maxDays
 	};
 
-	for (var i = 0; i < 7; i++) {					// 7 rows in the calendar
+	for (var i = 0; i < 7; i++){					// 7 rows in the calendar
 		var dayBefore = currentDay;
-		for (var j = 0; j < 8; j++) {				// 8 columns: week nr + 7 days p/ week
+		for (var j = 0; j < 8; j++){				// 8 columns: week nr + 7 days p/ week
 			if (i > 0 && j > 0) currentDay++;		// not first row, not week nr column
 			var day = currentDay;
 			var currentMonth = month;

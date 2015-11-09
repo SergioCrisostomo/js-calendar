@@ -39,7 +39,7 @@ The configuration object has 3 keys, all optional. Calling a new instance is use
 3. iteratorFns - a function (or array of functions) to be used while iterating each day
 	
 Note:
-The default language is English
+The default language is English.
 
 #### the generator returns:
 
