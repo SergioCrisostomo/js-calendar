@@ -19,8 +19,13 @@ function getWeekNumber(day) {
     };
 }
 
-function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
-	if (typeof weekStart == 'undefined') weekStart = 1;
+function getMonthCalender(year, month, iteratorFns){
+
+	// config passed by binding
+	var lang = this.lang || 'en';
+	var onlyDays = this.onlyDays;
+	var weekStart = typeof this.weekStart == 'undefined' ? 1 : this.weekStart;
+
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
@@ -28,6 +33,12 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
+
+	var returnObject = {
+		month: month,
+		year: year,
+		daysInMonth: maxDays
+	};
 
 	for (var i = 0; i < 7; i++) {					// 7 rows in the calendar
 		var dayBefore = currentDay;
@@ -59,7 +70,7 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 			if (iteratorFns){
 				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData);
 				else iteratorFns.forEach(function(fn){
-					dayData = fn(dayData);
+					dayData = fn.call(returnObject, dayData, lang);
 				});
 			}
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
@@ -67,12 +78,11 @@ function getMonthCalender(year, month, iteratorFns, onlyDays, weekStart){
 			if (j == 7 && i > 0) weekNr++;				// welcome to next week
 		}
 	}
-	return {
-		month: month,
-		year: year,
-		cells: cells,
-		daysInMonth: maxDays
-	};
+
+	returnObject.cells = cells;
+	return returnObject;
 }
 
-module.exports = getMonthCalender;
+module.exports = function (config){
+	return getMonthCalender.bind(config);
+}

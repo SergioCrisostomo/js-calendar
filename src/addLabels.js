@@ -1,58 +1,32 @@
 // calendar with 8 column x 7 rows
 
-var options = {
-	columnNames: {
-		en: {
-			0: 'w',
-			1: 'monday',
-			2: 'tuesday',
-			3: 'wednesday',
-			4: 'thursday',
-			5: 'friday',
-			6: 'saturday',
-			7: 'sunday'
-		}
-	},
-	monthNames: {	// not used yet
-		en: [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December"
-		]
-	},
-	classes: {
-		dayLabel: 'column-name',
-		weekLabel: 'week-number',
-		prevMonth: 'inactive',
-		nextMonth: 'inactive',
-		monthDay: 'day-in-month'
-	}
-};
+var labels = require('./labels');
 
-function mergeOptions(newOptions){
-	// todo
+function merge(_new, _old){
+    for (var prop in _new){
+        if (!_old[prop]) _old[prop] = _new[prop];
+        else merge(_new[prop], _old[prop]);
+    }
 }
 
 function addLabels(dayObject, lang){
-	if (!lang) lang = 'en';
-	var cssClass = [options.classes[dayObject.type]];
+
+	var cssClass = [labels.classes[dayObject.type]];
 
 	if (dayObject.class) dayObject.class = (typeof dayObject.class == 'string' ? [dayObject.class] : dayObject.class).concat(cssClass);
 	else dayObject.class = cssClass;
 
-	if (dayObject.index < 8) dayObject.desc = options.columnNames[lang][dayObject.index];
+	if (dayObject.index == 0 && labels.weekPlaceholder) dayObject.des = labels.weekPlaceholder;
+	if (dayObject.index < 8) dayObject.desc = labels.columnNames[lang][dayObject.index];
 	else if (dayObject.index % 8 == 0) dayObject.desc = dayObject.week;
+
+	if (dayObject.date) dayObject.monthName = labels.monthNames[lang][dayObject.date.getMonth()];
+	if (!this.monthName) this.monthName = labels.monthNames[lang][this.month];
 
 	return dayObject;
 }
+addLabels.setLabels = function(newOptions){
+	merge(newOptions, labels);
+};
 
 module.exports = addLabels;

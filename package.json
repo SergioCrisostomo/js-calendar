@@ -1,6 +1,6 @@
 {
   "name": "js-calendar",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "JavaScript calendar days generator",
   "main": "index.js",
   "scripts": {
