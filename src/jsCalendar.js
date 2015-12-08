@@ -68,7 +68,7 @@ function getMonthCalender(year, month, iteratorFns){
 				index: onlyDays ? cells.length : i * 8 + j // when onlyDays == true the index is just for days, not the full 55 max
 			};
 			if (iteratorFns){
-				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData);
+				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData, lang);
 				else iteratorFns.forEach(function(fn){
 					dayData = fn.call(returnObject, dayData, lang);
 				});
