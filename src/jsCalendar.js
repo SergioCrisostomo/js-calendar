@@ -27,10 +27,15 @@ function getMonthCalender(year, month, iteratorFns){
 	var weekStart = typeof this.weekStart == 'undefined' ? 1 : this.weekStart;
 
 	var cells = [];
+	var weekYearLeap;
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
 	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
 	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
+	if (month == 0 && weekNr != 1){
+		weekYearLeap = weekNr;
+		weekNr = 0;
+	}
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
 
@@ -62,7 +67,7 @@ function getMonthCalender(year, month, iteratorFns){
 			var isDay = dayBefore != currentDay && i > 0;
 			var dayData = {
 				desc: isDay ? day : weekNr,
-				week: weekNr,
+				week: weekNr ? weekNr : weekYearLeap,
 				type: type,
 				date: isDay ? new Date(year, currentMonth, day) : false,
 				index: onlyDays ? cells.length : i * 8 + j // when onlyDays == true the index is just for days, not the full 55 max
@@ -75,8 +80,8 @@ function getMonthCalender(year, month, iteratorFns){
 			}
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
-			if (j == 7 && i > 0) weekNr++;				// welcome to next week
 		}
+		if (i > 0) weekNr++;							// welcome to next week
 	}
 
 	returnObject.cells = cells;
