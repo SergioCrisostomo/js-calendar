@@ -1,6 +1,7 @@
 
 var assert = require('assert');
 var jsCalendar = require('../index');
+var weeksTotal = require('../assets/specs/total-weeks');
 
 describe('jsCalendar', function(){
 
@@ -42,7 +43,7 @@ describe('jsCalendar', function(){
 		});
 
 		it('should return correct week numbers', function(){
-			for (var y = 1978; y < 2078; y++){	// check dates between 1800 and 2300
+			for (var y = 1800; y < 2300; y++){	// check dates between 1800 and 2300
 				var monthInYear = jsCal(y, 0);
 				var weekNr = monthInYear.cells[0].week;
 				var dayInWeek = new Date(y, 0).getDay() || 7;
@@ -51,6 +52,30 @@ describe('jsCalendar', function(){
 				
 				var afterThreeWeeks = monthInYear.cells[28].week;
 				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 3);
+			}
+		});
+
+		it('should return calculate correct week number when changing year', function(){
+			var assetsIndex = 0;
+			var jsCal = new jsCalendar.Generator({onlyDays: true, weekStart: 1});
+			for (var y = 1971; y < 2051; y++){	// check dates between 1800 and 2300
+				var january = jsCal(y, 0);
+				// check the first and second thurdays in year
+				var thursday = january.cells[3];
+				var thursdayInYear = thursday.date.getFullYear();
+				
+				if (thursdayInYear == y -1){
+					assert.equal(thursday.week, weeksTotal[assetsIndex]);
+					assert.equal(january.cells[10].week, 1);
+				}
+				else if (thursdayInYear == y){
+					assert.equal(thursday.week, 1);
+					assert.equal(january.cells[10].week, 2);
+				}
+				else {
+					assert.equal(true, false); // this should never happen
+				}
+				assetsIndex++;
 			}
 		});
 	});
@@ -92,7 +117,6 @@ describe('jsCalendar', function(){
 			var monthInYear = jsCalWithWeeks(2016, 2, [jsCalendar.addLabels]);
 
 			monthInYear.cells.forEach(function(day){
-				console.log('day.type: ', day.type, monthInYear.cells.length, day)
 				if (day.type == 'prevMonth') assert.equal(day.monthName, 'February');
 				else if (day.type == 'nextMonth') assert.equal(day.monthName, 'April');
 				else if (day.type == 'monthDay') assert.equal(day.monthName, 'March');
