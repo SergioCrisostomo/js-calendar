@@ -27,15 +27,11 @@ function getMonthCalender(year, month, iteratorFns){
 	var weekStart = typeof this.weekStart == 'undefined' ? 1 : this.weekStart;
 
 	var cells = [];
-	var weekYearLeap;
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
 	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
-	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
-	if (month == 0 && weekNr != 1){
-		weekYearLeap = weekNr;
-		weekNr = 0;
-	}
+	var startWeek = getWeekNumber(monthStartDate).w;	// get week number of month start
+	var weekNr = startWeek;
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
 
@@ -53,9 +49,9 @@ function getMonthCalender(year, month, iteratorFns){
 			var currentMonth = month;
 			var otherMonth = day > maxDays || day < 1;	// day in sibling month
 			if (otherMonth){
-					// calculate day in sibling month
-					day = day > maxDays ? day - maxDays : lastMonthMaxDays + day;
-					currentMonth = currentDay > maxDays ? month + 1 : month - 1;
+				// calculate day in sibling month
+				day = day > maxDays ? day - maxDays : lastMonthMaxDays + day;
+				currentMonth = currentDay > maxDays ? month + 1 : month - 1;
 			}
 			var type = (function(){
 				if (j == 0) return 'weekLabel';
@@ -67,7 +63,7 @@ function getMonthCalender(year, month, iteratorFns){
 			var isDay = dayBefore != currentDay && i > 0;
 			var dayData = {
 				desc: isDay ? day : weekNr,
-				week: weekNr ? weekNr : weekYearLeap,
+				week: weekNr,
 				type: type,
 				date: isDay ? new Date(year, currentMonth, day) : false,
 				index: onlyDays ? cells.length : i * 8 + j // when onlyDays == true the index is just for days, not the full 55 max
@@ -81,7 +77,7 @@ function getMonthCalender(year, month, iteratorFns){
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
 		}
-		if (i > 0) weekNr++;							// welcome to next week
+		if (i > 0) weekNr = getWeekNumber(new Date(year, currentMonth, day + 1)).w;
 	}
 
 	returnObject.cells = cells;

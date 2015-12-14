@@ -1,7 +1,7 @@
 
 var assert = require('assert');
 var jsCalendar = require('../index');
-var weeksTotal = require('../assets/specs/total-weeks');
+var assets = require('../assets/specs/total-weeks');
 
 describe('jsCalendar', function(){
 
@@ -55,7 +55,7 @@ describe('jsCalendar', function(){
 			}
 		});
 
-		it('should return calculate correct week number when changing year', function(){
+		it('should return calculate correct week number when changing year - january', function(){
 			var assetsIndex = 0;
 			var jsCal = new jsCalendar.Generator({onlyDays: true, weekStart: 1});
 			for (var y = 1971; y < 2051; y++){	// check dates between 1800 and 2300
@@ -65,7 +65,7 @@ describe('jsCalendar', function(){
 				var thursdayInYear = thursday.date.getFullYear();
 				
 				if (thursdayInYear == y -1){
-					assert.equal(thursday.week, weeksTotal[assetsIndex]);
+					assert.equal(thursday.week, assets.totalWeeks[assetsIndex]);
 					assert.equal(january.cells[10].week, 1);
 				}
 				else if (thursdayInYear == y){
@@ -75,6 +75,24 @@ describe('jsCalendar', function(){
 				else {
 					assert.equal(true, false); // this should never happen
 				}
+				assetsIndex++;
+			}
+		});
+
+		it('should return calculate correct week number when changing year - december', function(){
+			var assetsIndex = 0;
+			var jsCal = new jsCalendar.Generator({onlyDays: true, weekStart: 1});
+			
+			for (var y = 1970; y < 2050; y++){	// check january dates between 1971 and 2051
+				var december = jsCal(y, 11);
+				var expected = assets.januaryWeekStart[assetsIndex];
+				// get only next january days
+				var extraDays = december.cells.filter(function(day){
+					return day.type == 'nextMonth';
+				});
+				assert.equal(extraDays.length > 0, true); // there is always some day there
+				assert.equal(extraDays[0].week, expected);
+				if (extraDays.length > 7) assert.equal(extraDays[7].week, expected == 1 ? 2 : 1);
 				assetsIndex++;
 			}
 		});
@@ -203,4 +221,5 @@ describe('jsCalendar', function(){
 		});
 
 	});
+
 });
