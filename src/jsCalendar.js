@@ -30,8 +30,7 @@ function getMonthCalender(year, month, iteratorFns){
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
 	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
-	var startWeek = getWeekNumber(monthStartDate).w;	// get week number of month start
-	var weekNr = startWeek;
+	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
 
