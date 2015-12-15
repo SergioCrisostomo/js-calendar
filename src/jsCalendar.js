@@ -4,7 +4,7 @@ function daysInMonth(year, month) {
     return new Date(year, month + 1, 0).getDate();
 }
 
-function getWeekNumber(day) {
+function getDateInfo(day) {
     // http://jsfiddle.net/ormfm5o8/ testing
     var d = new Date(+day);
     d.setHours(0, 0, 0);
@@ -30,9 +30,10 @@ function getMonthCalender(year, month, iteratorFns){
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
 	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
-	var weekNr = getWeekNumber(monthStartDate).w;	// get week number of month start
+	var weekNr = getDateInfo(monthStartDate).w;	// get week number of month start
 	var maxDays = daysInMonth(year, month);			// total days in current month
 	var lastMonthMaxDays = daysInMonth(year, month - 1);
+	var currentMonth, day;
 
 	var returnObject = {
 		month: month,
@@ -44,29 +45,35 @@ function getMonthCalender(year, month, iteratorFns){
 		var dayBefore = currentDay;
 		for (var j = 0; j < 8; j++){				// 8 columns: week nr + 7 days p/ week
 			if (i > 0 && j > 0) currentDay++;		// not first row, not week nr column
-			var day = currentDay;
-			var currentMonth = month;
-			var otherMonth = day > maxDays || day < 1;	// day in sibling month
-			if (otherMonth){
+			
+			if (currentDay > maxDays || currentDay < 1){ // day belongs to sibling month
 				// calculate day in sibling month
-				day = day > maxDays ? day - maxDays : lastMonthMaxDays + day;
+				day = currentDay > maxDays ? currentDay - maxDays : lastMonthMaxDays + currentDay;
 				currentMonth = currentDay > maxDays ? month + 1 : month - 1;
+			} else {
+				day = currentDay;
+				currentMonth = month;
 			}
+
 			var type = (function(){
 				if (j == 0) return 'weekLabel';
 				else if (i == 0) return 'dayLabel';
-				else if (otherMonth && currentDay < 1) return 'prevMonth';
-				else if (otherMonth && currentDay > maxDays) return 'nextMonth';
+				else if (currentDay < 1) return 'prevMonth';
+				else if (currentDay > maxDays) return 'nextMonth';
 				else return 'monthDay';
 			})();
 			var isDay = dayBefore != currentDay && i > 0;
+			var _date = new Date(year, currentMonth, day);
+
 			var dayData = {
 				desc: isDay ? day : weekNr,
 				week: weekNr,
 				type: type,
-				date: isDay ? new Date(year, currentMonth, day) : false,
-				index: onlyDays ? cells.length : i * 8 + j // when onlyDays == true the index is just for days, not the full 55 max
+				date: isDay ? _date : false,
+				year: currentMonth < 0 ? year - 1 : currentMonth > 11 ? year + 1 : year,
+				index: cells.length
 			};
+
 			if (iteratorFns){
 				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData, lang);
 				else iteratorFns.forEach(function(fn){
@@ -76,7 +83,7 @@ function getMonthCalender(year, month, iteratorFns){
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
 		}
-		if (i > 0) weekNr = getWeekNumber(new Date(year, currentMonth, day + 1)).w;
+		if (i > 0) weekNr = getDateInfo(new Date(year, currentMonth, day + 1)).w;
 	}
 
 	returnObject.cells = cells;

@@ -25,6 +25,24 @@ describe('jsCalendar', function(){
 			assert.equal(january.daysInMonth, 31);
 		});
 
+		it('should set correct year', function(){
+			var jsCal = new jsCalendar.Generator({onlyDays: true});
+			var january = jsCal(2014, 0);
+			var december = jsCal(2014, 11);
+
+			assert.equal(january.year, 2014);
+			assert.equal(december.year, 2014);
+
+
+			assert.equal(january.cells[0].year, 2013); // 30 dec
+			assert.equal(january.cells[1].year, 2013); // 31 dec
+			assert.equal(january.cells[2].year, 2014); // 1 jan
+
+			assert.equal(december.cells[30].year, 2014); // 31 dec
+			assert.equal(december.cells[31].year, 2015); // 1 jan
+
+		});
+
 		it('should return correct month length', function(){
 			for (var y = 1800; y < 2300; y++){	// check dates between 1800 and 2300
 				for (var m = 0; m < 12; m++){

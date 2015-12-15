@@ -59,6 +59,7 @@ The iteration function receives two arguments, a object with the day info and th
  - (_week_) the number of the week in the year
  - (_type_) the type of the iterated object. Can be `weekLabel`, `dayLabel`, `prevMonth`, `nextMonth` or `monthDay`.
  - (_date_) a Date object for that day. Will be set `false` if its a label cell.
+ - (_year_) the year of the specific Date or week label.
  - (_index_) index position in the 8 x 7 position in the return of the callendar.
 
 The _this_ inside the iterator function is set to the _month object_ that the generator will return.
