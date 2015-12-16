@@ -65,12 +65,15 @@ function getMonthCalender(year, month, iteratorFns){
 			var isDay = dayBefore != currentDay && i > 0;
 			var _date = new Date(year, currentMonth, day);
 
+			var returnYear = currentMonth < 0 ? year - 1 : currentMonth > 11 ? year + 1 : year;
+			if ((currentMonth === 11 || currentMonth === -1) && (weekNr === 1)) returnYear++;
+
 			var dayData = {
 				desc: isDay ? day : weekNr,
 				week: weekNr,
 				type: type,
 				date: isDay ? _date : false,
-				year: currentMonth < 0 ? year - 1 : currentMonth > 11 ? year + 1 : year,
+				year: returnYear,
 				index: cells.length
 			};
 
