@@ -25,21 +25,20 @@ describe('jsCalendar', function(){
 			assert.equal(january.daysInMonth, 31);
 		});
 
-		it('should set correct year', function(){
+		it('should set correct year that the week belongs to', function(){
 			var jsCal = new jsCalendar.Generator({onlyDays: true});
-			var january = jsCal(2014, 0);
-			var december = jsCal(2014, 11);
+			var january = jsCal(2010, 0);
+			var december = jsCal(2010, 11);
 
-			assert.equal(january.year, 2014);
-			assert.equal(december.year, 2014);
+			assert.equal(january.year, 2010);
+			assert.equal(december.year, 2010);
 
-
-			assert.equal(january.cells[0].year, 2013); // 30 dec
-			assert.equal(january.cells[1].year, 2013); // 31 dec
-			assert.equal(january.cells[2].year, 2014); // 1 jan
-
-			assert.equal(december.cells[30].year, 2014); // 31 dec
-			assert.equal(december.cells[31].year, 2015); // 1 jan
+			assert.equal(january.cells[0].year, 2009); // 28 dec, week 53
+			assert.equal(january.cells[6].year, 2009); // 3 jan, week 53
+			assert.equal(january.cells[7].year, 2010); // 4 jan, week 1
+			
+			assert.equal(december.cells[34].year, 2010); // 2 jan, week 52
+			assert.equal(december.cells[35].year, 2011); // 3 jan, week 1
 
 		});
 
