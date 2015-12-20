@@ -1,21 +1,25 @@
-#js-calendar
+#js-calendar 
+
 
 A JavaScript calendar days generator for datepickers and apps where weekdays are needed.
 
+[![Build Status](https://travis-ci.org/SergioCrisostomo/js-calendar.svg)](https://travis-ci.org/SergioCrisostomo/js-calendar)
+
 ---
 
-## install
+
+## Install
 
     npm install js-calendar
 
-## components
+## Components
 
 	- Generator - the main "Core" feature, a function to generate calendar days for the requested month
 	- addLabels - the default iterator that adds basic CSS classes to each day object and labels for column head
 
 # jsCalendar.generator
 
-## usage
+## Usage
 
 	// require it
 	var jsCalendar = require('js-calendar');
@@ -24,15 +28,15 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 	// use it
 	var january = generator(year, month, iteratorFn);
 
-#### configuration object:
+#### Configuration object:
 
 The configuration object has 3 keys, all optional. Calling a new instance is usefull to cache for example different languages. The options are:
 
 1. onlyDays - (boolean) generate only days and no labels or week numbers. When not specified it will default to `false`;
-2. weekStart - (number) the starting day of the week. Can be `0` for sunday or `1` for monday. When not specified it will default to `1`;
+2. weekStart - (number) the starting day of the week. Can be `0` for US date formating, starting week on sunday **or** `1` for monday, using the ISO 8601 standard, used for example in Europe. When not specified it will default to `1`;
 3. language - (string) the language of the result. This is usefull in the iterator functions, the generator itself does not use it;
 
-#### usage arguments:
+#### Usage arguments:
 
 1. year - (number) the year
 2. month - (number) the month, zero based (ie. january is month number `0`).
@@ -41,7 +45,7 @@ The configuration object has 3 keys, all optional. Calling a new instance is use
 Note:
 The default language is English.
 
-#### the generator returns:
+#### The generator returns:
 
 * (*object*) O object with keys:
 
@@ -50,7 +54,7 @@ The default language is English.
 	* (*cells*) A array with objects as passed to the iterator function above.
 	* (*daysInMonth*) The number of days in the month.
 	
-## iterator funtions(s)
+## Iterator funtions(s)
 
 As mentioned above you can pass a iterator function (or array of functions).
 The iteration function receives two arguments, a object with the day info and the _lang_ passed to the _generator_ function config. The object receives the following properties:
@@ -69,7 +73,7 @@ The iterator function(s) must `return` a object, that will override the original
 
 This method adds CSS classes, labels the day-in-week name and ads month name to each day and the month object, in the configured language. It has a `.setLabels` method that receives a object with extra labels/languages to add to the current labels. The default labels do not get re-writen by the `setLabels` method.
 
-# examples:
+# Examples:
 
 Get just the days in a month:
 
@@ -97,18 +101,19 @@ Get days and labels in a month:
 
 Compile HTML with jade
 	
-## testing
+## Testing
 
 js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your command line:
 
     npm install
 	npm test
 
-## todo:
+## Todo:
 
 	- add even more tests
 	- add more usefull iterator function for standard uses
 	- add more examples like jade compiler or some other use case
+	- make it easyer to use in the Brower (maybe a dist build folder)
 	
 
 
