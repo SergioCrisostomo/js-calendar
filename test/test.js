@@ -25,20 +25,50 @@ describe('jsCalendar', function(){
 			assert.equal(january.daysInMonth, 31);
 		});
 
+		it('should read "onlyDays" parameter', function(){
+			var onlyDaysCal = new jsCalendar.Generator({onlyDays: true});
+			var defaultCal = new jsCalendar.Generator();
+			var alsoLabelsCal = new jsCalendar.Generator({onlyDays: false});
+
+			assert.equal(onlyDaysCal(2017, 0).cells.length, 42);
+			assert.equal(defaultCal(2017, 0).cells.length, 56);
+			assert.equal(alsoLabelsCal(2017, 0).cells.length, 56);
+		});
+
 		it('should set correct year that the week belongs to', function(){
-			var jsCal = new jsCalendar.Generator({onlyDays: true});
-			var january = jsCal(2010, 0);
-			var december = jsCal(2010, 11);
+			['iso', 'US format'].forEach(function(standard){
+				var iso = standard == 'iso';
+				var jsCal = new jsCalendar.Generator({onlyDays: true, weekStart: iso ? 1 : 0});
+				var january = jsCal(2010, 0);
+				var december = jsCal(2010, 11);
 
-			assert.equal(january.year, 2010);
-			assert.equal(december.year, 2010);
+				assert.equal(january.year, 2010);
+				assert.equal(december.year, 2010);
 
-			assert.equal(january.cells[0].year, 2009); // 28 dec, week 53
-			assert.equal(january.cells[6].year, 2009); // 3 jan, week 53
-			assert.equal(january.cells[7].year, 2010); // 4 jan, week 1
-			
-			assert.equal(december.cells[34].year, 2010); // 2 jan, week 52
-			assert.equal(december.cells[35].year, 2011); // 3 jan, week 1
+				assert.equal(january.cells[0].year, iso ? 2009 : 2010); // 28 dec, week 53 iso, week 1 US
+				assert.equal(january.cells[6].year, iso ? 2009 : 2010); // 3 jan, week 53/week 1
+				assert.equal(january.cells[7].year, 2010); // 4 jan, week 1
+
+				assert.equal(december.cells[34].year, iso ? 2010 : 2011); // 2 jan, week 52 iso/week 1 US
+				assert.equal(december.cells[35].year, 2011); // 3 jan, week 1
+			});
+
+		});
+
+		it('should set correct week in US standard', function(){
+			var jsCal_default = new jsCalendar.Generator({onlyDays: true});
+			var jsCal_US = new jsCalendar.Generator({onlyDays: true, weekStart: 0});
+			var jsCal_EU = new jsCalendar.Generator({onlyDays: true, weekStart: 1});
+			var weekUS = assets.i18n;
+			var testYears = Object.keys(assets.i18n);
+
+			// US DATES TEST
+			testYears.forEach(function(year){
+				for (var m = 0; m < 12; m++){
+					var month = jsCal_US(year, m);
+					assert.equal(month.cells[0].week, weekUS[year][m]);
+				}
+			});
 
 		});
 
@@ -113,6 +143,7 @@ describe('jsCalendar', function(){
 				assetsIndex++;
 			}
 		});
+
 	});
 
 	describe('addLabels should add classes correctly', function(){
