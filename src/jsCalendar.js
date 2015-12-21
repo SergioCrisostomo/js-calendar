@@ -98,8 +98,9 @@ function getMonthCalender(year, month, iteratorFns){
 			if (onlyDays && isDay) cells.push(dayData);	// add only days
 			else if (!onlyDays) cells.push(dayData);	// add also week numbers and labels
 		}
-		if (i > 0) weekNr = getDateInfo(year, currentMonth, day + 1, iso);
 		currentYear = getYear(year, month, weekNr);
+		if (currentMonth > 11) currentMonth = 0;
+		weekNr = getDateInfo(currentYear, currentMonth, day + 1, iso);
 	}
 
 	returnObject.cells = cells;

@@ -66,7 +66,8 @@ describe('jsCalendar', function(){
 			testYears.forEach(function(year){
 				for (var m = 0; m < 12; m++){
 					var month = jsCal_US(year, m);
-					assert.equal(month.cells[0].week, weekUS[year][m]);
+					var firstDayOfMonth = month.cells.filter(function(cell){ return cell.type == 'monthDay'; })[0];
+					assert.equal(firstDayOfMonth.week, weekUS[year][m]);
 				}
 			});
 
