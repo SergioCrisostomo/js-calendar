@@ -13,7 +13,10 @@ function getYear(year, month, weekNr){
 }
 
 function getDateInfo(y, m, d, iso) {
-
+	if (m > 11){
+		m = 0;
+		y++;
+	}
     var currentDay = new Date(y, m, d);
     if (iso) currentDay.setDate(currentDay.getDate() + 4 - (currentDay.getDay() || 7));
     var year = iso ? currentDay.getFullYear() : y;
@@ -41,7 +44,7 @@ function getMonthCalender(year, month, iteratorFns){
 	var iso = weekStart == 1;
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
-	var dayOfWeek = monthStartDate.getDay() || 7;	// month week day for day 1
+	var dayOfWeek = monthStartDate.getDay() || (iso ? 7 : 0);	// month week day for day 1
 	var currentDay = weekStart - dayOfWeek; 		// starting position of first day in the week
 	var weekNr = getDateInfo(year, month, 1, iso);	// get week number of month start
 	var maxDays = daysInMonth(year, month);			// total days in current month
