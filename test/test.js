@@ -51,6 +51,18 @@ describe('jsCalendar', function(){
 
 				assert.equal(december.cells[34].year, iso ? 2010 : 2011); // 2 jan, week 52 iso/week 1 US
 				assert.equal(december.cells[35].year, 2011); // 3 jan, week 1
+
+
+				// #2 - should not start a month with a full week from past month,
+				// the first 7 days must contain at least 1 day from the current month
+				for (var y = 1978; y < 2079; y++){	// check dates between 1800 and 2300
+					for (var m = 0; m < 12; m++){
+						var cells = jsCal(y, m).cells;
+						var firstWeek = cells.slice(0, 7);
+						var lastDayInWeek = firstWeek.pop();
+						assert.equal(lastDayInWeek.date.getTime() >= new Date(y, m, 1).getTime(), true);
+					}
+				}
 			});
 
 		});
@@ -66,10 +78,22 @@ describe('jsCalendar', function(){
 			testYears.forEach(function(year){
 				for (var m = 0; m < 12; m++){
 					var month = jsCal_US(year, m);
-					assert.equal(month.cells[0].week, weekUS[year][m]);
+					var firstDayOfMonth = month.cells.filter(function(cell){
+						return cell.type == 'monthDay';
+					})[0];
+					assert.equal(firstDayOfMonth.week, weekUS[year][m]);
 				}
 			});
-
+			
+			// isolated buggy dates:
+			// #1 - last week of cells is set wrong when it belongs to 2nd week of next year
+			var dec2015 = jsCal_US(2015, 11);
+			var lastWeek = dec2015.cells.slice(-7);
+			lastWeek.forEach(function(entry, i){
+				// should match the correct days in 2nd week of jan2016
+				assert.equal(entry.date.getDay(), i); 
+				assert.equal(entry.week, 2);
+			});		
 		});
 
 		it('should return correct month length', function(){

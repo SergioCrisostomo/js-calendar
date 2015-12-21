@@ -13,7 +13,10 @@ function getYear(year, month, weekNr){
 }
 
 function getDateInfo(y, m, d, iso) {
-
+	if (m > 11){
+		m = 0;
+		y++;
+	}
     var currentDay = new Date(y, m, d);
     if (iso) currentDay.setDate(currentDay.getDate() + 4 - (currentDay.getDay() || 7));
     var year = iso ? currentDay.getFullYear() : y;
