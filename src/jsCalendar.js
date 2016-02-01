@@ -34,7 +34,6 @@ function getDateInfo(y, m, d, iso) {
 	return w;
 }
 
-
 function getMonthCalender(year, month, iteratorFns){
 
 	// config passed by binding
@@ -62,7 +61,7 @@ function getMonthCalender(year, month, iteratorFns){
 		dayBefore = currentDay;
 		for (var j = 0; j < 8; j++){				// 8 columns: week nr + 7 days p/ week
 			if (i > 0 && j > 0) currentDay++;		// not first row, not week nr column
-			
+
 			if (currentDay > maxDays || currentDay < 1){ // day belongs to sibling month
 				// calculate day in sibling month
 				day = currentDay > maxDays ? currentDay - maxDays : lastMonthMaxDays + currentDay;
@@ -80,14 +79,13 @@ function getMonthCalender(year, month, iteratorFns){
 				else return 'monthDay';
 			})();
 			var isDay = dayBefore != currentDay && i > 0;
-			var _date = new Date(year, currentMonth, day);
 
 			var dayData = {
 				desc: isDay ? day : weekNr,
 				week: weekNr,
 				type: type,
 				format: iso ? 'ISO 8601' : 'US',
-				date: isDay ? _date : false,
+				date: isDay ? new Date(Date.UTC(year, currentMonth, day)) : false,
 				year: currentYear,
 				index: cells.length
 			};
