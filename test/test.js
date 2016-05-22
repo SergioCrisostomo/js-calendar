@@ -84,16 +84,16 @@ describe('jsCalendar', function(){
 					assert.equal(firstDayOfMonth.week, weekUS[year][m]);
 				}
 			});
-			
+
 			// isolated buggy dates:
 			// #1 - last week of cells is set wrong when it belongs to 2nd week of next year
 			var dec2015 = jsCal_US(2015, 11);
 			var lastWeek = dec2015.cells.slice(-7);
 			lastWeek.forEach(function(entry, i){
 				// should match the correct days in 2nd week of jan2016
-				assert.equal(entry.date.getDay(), i); 
+				assert.equal(entry.date.getDay(), i);
 				assert.equal(entry.week, 2);
-			});		
+			});
 		});
 
 		it('should return correct month length', function(){
@@ -120,7 +120,7 @@ describe('jsCalendar', function(){
 				var dayInWeek = new Date(y, 0).getDay() || 7;
 				if (dayInWeek > 4) assert.equal(weekNr > 50, true);
 				else assert.equal(weekNr, 1);
-				
+
 				var afterThreeWeeks = monthInYear.cells[28].week;
 				if (dayInWeek <= 4) assert.equal(afterThreeWeeks, 3);
 			}
@@ -134,7 +134,7 @@ describe('jsCalendar', function(){
 				// check the first and second thurdays in year
 				var thursday = january.cells[3];
 				var thursdayInYear = thursday.date.getFullYear();
-				
+
 				if (thursdayInYear == y -1){
 					assert.equal(thursday.week, assets.totalWeeks[assetsIndex]);
 					assert.equal(january.cells[10].week, 1);
@@ -153,7 +153,7 @@ describe('jsCalendar', function(){
 		it('should return calculate correct week number when changing year - december', function(){
 			var assetsIndex = 0;
 			var jsCal = new jsCalendar.Generator({onlyDays: true, weekStart: 1});
-			
+
 			for (var y = 1970; y < 2050; y++){	// check january dates between 1971 and 2051
 				var december = jsCal(y, 11);
 				var expected = assets.januaryWeekStart[assetsIndex];
@@ -250,6 +250,17 @@ describe('jsCalendar', function(){
 			var month = monthInYear.cells.pop().monthName;
 			assert.equal(month, 'Abril');
 		});
+
+		it('should set correct days when using "onlyDays == true" parameter', function(){
+			var onlyDaysCal = new jsCalendar.Generator({onlyDays: true});
+			var cells = onlyDaysCal(2017, 0, [jsCalendar.addLabels]).cells;
+			var NumericCells = cells.map(day => {
+				return Number(day.desc);
+			}).filter(Boolean);
+			assert.equal(cells.length, 42);
+			assert.equal(NumericCells.length, 42);
+		});
+
 	});
 
 	describe('should generate correct index', function(){
