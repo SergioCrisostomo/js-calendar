@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "browserify": "^13.0.1",
     "mocha": "^2.3.3"
   },
   "directories": {
