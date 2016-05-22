@@ -1,7 +1,7 @@
-#js-calendar 
+#js-calendar
 
 
-A JavaScript calendar days generator for datepickers and apps where weekdays are needed.
+A JavaScript client- & server-side calendar days generator for datepickers and apps. Provides day of the week, month info and some other cool stuff.
 
 [![Build Status](https://travis-ci.org/SergioCrisostomo/js-calendar.svg)](https://travis-ci.org/SergioCrisostomo/js-calendar)
 
@@ -11,6 +11,10 @@ A JavaScript calendar days generator for datepickers and apps where weekdays are
 ## Install
 
     npm install js-calendar
+
+## Demo
+
+You can find a demo for the Browser [here](https://rawgit.com/SergioCrisostomo/js-calendar/master/demo/demo.html). If you want to play around with it, check [this jsFiddle](https://jsfiddle.net/Sergio_fiddle/e8607dnL/).
 
 ## Components
 
@@ -41,7 +45,7 @@ The configuration object has 3 keys, all optional. Calling a new instance is use
 1. year - (number) the year
 2. month - (number) the month, zero based (ie. january is month number `0`).
 3. iteratorFns - a function (or array of functions) to be used while iterating each day
-	
+
 Note:
 The default language is English.
 
@@ -53,7 +57,7 @@ The default language is English.
 	* (*year*) The generated year.
 	* (*cells*) A array with objects as passed to the iterator function above.
 	* (*daysInMonth*) The number of days in the month.
-	
+
 ## Iterator funtions(s)
 
 As mentioned above you can pass a iterator function (or array of functions).
@@ -100,7 +104,7 @@ Get days and labels in a month:
 	//		etc...
 
 Compile HTML with jade
-	
+
 ## Testing
 
 js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your command line:
@@ -114,8 +118,3 @@ js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your comma
 	- add more usefull iterator function for standard uses
 	- add more examples like jade compiler or some other use case
 	- make it easyer to use in the Brower (maybe a dist build folder)
-	
-
-
-
-
