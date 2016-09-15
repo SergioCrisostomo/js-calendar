@@ -84,7 +84,7 @@ Get just the days in a month:
 	var jsCalendar = require('js-calendar');
 	var jsCal = new jsCalendar.Generator({onlyDays: true});
 	var januaryDays = jsCal(2016, 0);
-	vr totalDays = januaryDays.daysInMonth;	// 29
+	var totalDays = januaryDays.daysInMonth;	// 29
 	var days = januaryDays.cells;
 	console.log(januaryDays);
 	// 	[
