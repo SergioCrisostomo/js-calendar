@@ -91,7 +91,7 @@ function getMonthCalender(year, month, iteratorFns){
 			};
 
 			if (iteratorFns){
-				if (typeof iteratorFns === "function") dayData = iteratorFns(dayData, lang);
+				if (typeof iteratorFns === "function") dayData = iteratorFns.call(returnObject, dayData, lang);
 				else iteratorFns.forEach(function(fn){
 					dayData = fn.call(returnObject, dayData, lang);
 				});
