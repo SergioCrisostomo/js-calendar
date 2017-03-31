@@ -219,36 +219,36 @@ describe('jsCalendar', function(){
 		});
 
 		it('should merge new options', function(){
-			var jsCal = new jsCalendar.Generator({lang: 'pt'});
-			var ptColumnNames = {
-				0: 'w',
-				1: 'segunda',
-				2: 'terça',
-				3: 'quarta',
-				4: 'quinta',
-				5: 'sexta',
-				6: 'sabado',
-				7: 'domingo'
+			var columnNames = {
+				0: '_w',
+				1: '_segunda',
+				2: '_terça',
+				3: '_quarta',
+				4: '_quinta',
+				5: '_sexta',
+				6: '_sabado',
+				7: '_domingo'
 			};
-			var ptMonthNames = [
-				"Janeiro",
-				"Fevereiro",
-				"Março",
-				"Abril",
-				"Maio",
-				"Junho",
-				"Julho",
-				"Agosto",
-				"Setembro",
-				"Outubro",
-				"Novembro",
-				"Dezembro"
+			var monthNames = [
+				"_Janeiro",
+				"_Fevereiro",
+				"_Março",
+				"_Abril",
+				"_Maio",
+				"_Junho",
+				"_Julho",
+				"_Agosto",
+				"_Setembro",
+				"_Outubro",
+				"_Novembro",
+				"_Dezembro"
 			];
-			var pt = {monthNames: {pt: ptMonthNames}, columnNames: {pt: ptColumnNames}};
-			jsCalendar.addLabels.setLabels(pt);
+			var marsian = {monthNames: {marsian: monthNames}, columnNames: {marsian: columnNames}};
+			jsCalendar.addLabels.setLabels(marsian);
+			var jsCal = new jsCalendar.Generator({lang: 'marsian'});
 			var monthInYear = jsCal(2016, 2, [jsCalendar.addLabels]);
 			var month = monthInYear.cells.pop().monthName;
-			assert.equal(month, 'Abril');
+			assert.equal(month, '_Abril');
 		});
 
 		it('should set correct days when using "onlyDays == true" parameter', function(){
@@ -259,6 +259,20 @@ describe('jsCalendar', function(){
 			}).filter(Boolean);
 			assert.equal(cells.length, 42);
 			assert.equal(NumericCells.length, 42);
+		});
+
+		it('should set correct monthName when single function instead of array in iterators callback', function(){
+			var onlyDaysCal = new jsCalendar.Generator();
+			var cal = onlyDaysCal(2017, 0, jsCalendar.addLabels);
+			assert.equal(cal.monthName, 'January');
+		});
+
+		it('should set export the labels to the calendar object (not only each dayObject)', function(){
+			var jsCal = new jsCalendar.Generator();
+			var cal = jsCal(2017, 0, jsCalendar.addLabels);
+			assert.equal('labels' in cal && !!cal.labels, true);
+			assert.equal(Object.keys(cal.labels).includes('monthNames'), true);
+			assert.equal(cal.labels.monthNames[1], 'February');
 		});
 
 	});
