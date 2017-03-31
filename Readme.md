@@ -112,6 +112,10 @@ js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your comma
     npm install
 	npm test
 
+## Build
+
+    npm build
+
 ## Todo:
 
 	- add even more tests
