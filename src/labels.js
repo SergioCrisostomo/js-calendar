@@ -12,7 +12,7 @@ module.exports = {
 			6: 'saturday',
 			7: 'sunday'
 		},
-		se: {
+		sv: {
 			0: 'v',
 			1: 'mondag',
 			2: 'tisdag',
@@ -21,6 +21,16 @@ module.exports = {
 			5: 'fredag',
 			6: 'lördag',
 			7: 'söndag'
+		},
+		pt: {
+			0: 's',
+			1: 'segunda',
+			2: 'terça',
+			3: 'quarta',
+			4: 'quinta',
+			5: 'sexta',
+			6: 'sabado',
+			7: 'domingo'
 		}
 	},
 	monthNames: {
@@ -38,7 +48,7 @@ module.exports = {
 			"November",
 			"December"
 		],
-		se: [
+		sv: [
 			"januari",
 			"februari",
 			"mars",
@@ -51,6 +61,20 @@ module.exports = {
 			"oktober",
 			"november",
 			"december"
+		],
+		pt: [
+			"Janeiro",
+			"Fevereiro",
+			"Março",
+			"Abril",
+			"Maio",
+			"Junho",
+			"Julho",
+			"Agosto",
+			"Setembro",
+			"Outubro",
+			"Novembro",
+			"Dezembro"
 		]
 	},
 	classes: {
