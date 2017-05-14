@@ -29,7 +29,7 @@ module.exports = {
 			3: 'quarta',
 			4: 'quinta',
 			5: 'sexta',
-			6: 'sabado',
+			6: 'sábado',
 			7: 'domingo'
 		}
 	},
