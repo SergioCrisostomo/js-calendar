@@ -14,7 +14,7 @@ module.exports = {
 		},
 		sv: {
 			0: 'v',
-			1: 'mondag',
+			1: 'måndag',
 			2: 'tisdag',
 			3: 'onsdag',
 			4: 'torsdag',
