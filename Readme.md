@@ -1,7 +1,8 @@
-#js-calendar
+
+# js-calendar
 
 
-A JavaScript client- & server-side calendar days generator for datepickers and apps. Provides day of the week, month info and some other cool stuff.
+A client- or server-side JavaScript calendar for generating days, week days and week number for datepickers and apps. Provides day of the week, week number, month info, can start week on monday or sunday and some other cool stuff.
 
 [![Build Status](https://travis-ci.org/SergioCrisostomo/js-calendar.svg)](https://travis-ci.org/SergioCrisostomo/js-calendar)
 
