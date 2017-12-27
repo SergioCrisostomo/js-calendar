@@ -7,8 +7,8 @@ function daysInMonth(year, month) {
 }
 
 function getYear(year, month, weekNr){
-	if (month == 0 && weekNr > 50) return year - 1;
-	else if(month == 11 && weekNr < 10) return year + 1;
+	if (month === 0 && weekNr > 50) return year - 1;
+	else if(month === 11 && weekNr < 10) return year + 1;
 	else return year;
 }
 
@@ -39,8 +39,8 @@ function getMonthCalender(year, month, iteratorFns){
 	// config passed by binding
 	var lang = this.lang || 'en';
 	var onlyDays = this.onlyDays;
-	var weekStart = typeof this.weekStart == 'undefined' ? 1 : this.weekStart;
-	var iso = weekStart == 1;
+	var weekStart = typeof this.weekStart === 'undefined' ? 1 : this.weekStart;
+	var iso = weekStart === 1;
 	var cells = [];
 	var monthStartDate = new Date(year, month, 1);	// make a date object
 	var dayOfWeek = monthStartDate.getDay() || (iso ? 7 : 0);	// month week day for day 1
@@ -72,13 +72,13 @@ function getMonthCalender(year, month, iteratorFns){
 			}
 
 			var type = (function(){
-				if (j == 0) return 'weekLabel';
-				else if (i == 0) return 'dayLabel';
+				if (j === 0) return 'weekLabel';
+				else if (i === 0) return 'dayLabel';
 				else if (currentDay < 1) return 'prevMonth';
 				else if (currentDay > maxDays) return 'nextMonth';
 				else return 'monthDay';
 			})();
-			var isDay = dayBefore != currentDay && i > 0;
+			var isDay = dayBefore !== currentDay && i > 0;
 
 			var dayData = {
 				desc: isDay ? day : weekNr,
