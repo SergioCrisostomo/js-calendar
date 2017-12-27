@@ -54,7 +54,7 @@ module.exports = {
 			"mars",
 			"april",
 			"maj",
-			"june",
+			"juni",
 			"juli",
 			"augusti",
 			"september",
