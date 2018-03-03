@@ -2,7 +2,7 @@
 # js-calendar
 
 
-A client- or server-side JavaScript calendar for generating days, week days and week number for datepickers and apps. Provides day of the week, week number, month info, can start week on monday or sunday and some other cool stuff.
+A client- or server-side JavaScript package for generating calendar with days, week days and week number, for datepickers and apps. Provides day of the week, week number, month info, can start week on monday or sunday and some other cool stuff.
 
 [![Build Status](https://travis-ci.org/SergioCrisostomo/js-calendar.svg)](https://travis-ci.org/SergioCrisostomo/js-calendar)
 
@@ -110,16 +110,14 @@ Compile HTML with jade
 
 js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your command line:
 
-    npm install
+	npm install
 	npm test
 
 ## Build
 
-    npm build
+	npm build
 
 ## Todo:
 
 	- add even more tests
 	- add more usefull iterator function for standard uses
-	- add more examples like jade compiler or some other use case
-	- make it easyer to use in the Brower (maybe a dist build folder)
