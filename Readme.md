@@ -104,7 +104,6 @@ Get days and labels in a month:
 	//		{"desc":"tuesday","week":5,"type":"dayLabel","date":false,"index":2,"class":["column-name"]},
 	//		etc...
 
-Compile HTML with jade
 
 ## Testing
 
@@ -115,9 +114,5 @@ js-calendar uses [mocha](http://mochajs.org/). To run the tests do in your comma
 
 ## Build
 
-	npm build
+	npm run build
 
-## Todo:
-
-	- add even more tests
-	- add more usefull iterator function for standard uses
