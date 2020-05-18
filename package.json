@@ -12,8 +12,9 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "webpack": "^2.3.2"
+    "eslint": "^7.0.0",
+    "mocha": "^7.1.2",
+    "webpack": "^4.43.0"
   },
   "directories": {
     "test": "test"
