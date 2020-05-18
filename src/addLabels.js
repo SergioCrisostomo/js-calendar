@@ -1,6 +1,6 @@
 // calendar with 8 column x 7 rows
 
-var labels = require('./labels');
+const labels = require('./labels');
 
 function isIterable(variable){
 	if (variable == null) return false;
@@ -10,14 +10,14 @@ function isIterable(variable){
 }
 
 function merge(_new, _old){
-    for (var prop in _new){
+    for (const prop in _new){
         if (!_old[prop]) _old[prop] = _new[prop];
         else if (isIterable(_new[prop])) merge(_new[prop], _old[prop]);
     }
 }
 
 function addLabels(dayObject, lang){
-	var cssClass = [labels.classes[dayObject.type]];
+	const cssClass = [labels.classes[dayObject.type]];
 
 	if (dayObject.class) dayObject.class = (typeof dayObject.class == 'string' ? [dayObject.class] : dayObject.class).concat(cssClass);
 	else dayObject.class = cssClass;
